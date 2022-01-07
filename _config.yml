@@ -92,4 +92,11 @@ defaults:
       has_children: false
       nav_order: 1
 
+  -                          
+    scope:
+      path: "Otros" 
+    values:
+      parent: otros
+      has_children: false
+      nav_order: 1
 

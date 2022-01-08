@@ -1,4 +1,4 @@
-title: "ramespada/docs"
+title: "ramespada/mydocs"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: nil
 exclude : [ NO_BORRAR/, misc/, aq/, aq.md,gis/,gis.md]
@@ -96,7 +96,7 @@ defaults:
     scope:
       path: "Otros" 
     values:
-      parent: otros
+      parent: Otros
       has_children: false
       nav_order: 1
 

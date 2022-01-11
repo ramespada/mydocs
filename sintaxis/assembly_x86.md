@@ -1,6 +1,7 @@
 ---
 title: Assembly x86 (32-bits)
 descripcion: Sintaxis básica de Assemly ó Assembler
+nav_order: 6
 ---
 
 # Assembly 

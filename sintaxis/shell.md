@@ -1,6 +1,7 @@
 ---
 title: Shell
 description: Sintaxis básica de shell (bash)
+nav_order: 1
 ---
 
 # SHELL

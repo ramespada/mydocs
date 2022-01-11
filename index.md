@@ -1,8 +1,11 @@
 ---
 has_children: false
+nav_order: 1
 ---
 
 # Home
 
-> Repositorio con documentos didácticos.
+> Repositorio de documentos didácticos para uso personal.
+
+
 

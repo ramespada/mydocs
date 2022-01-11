@@ -1,6 +1,7 @@
 ---
 title: Numerico
 description: Fundamentos de análisis numérico.
+nav_order: 4
 ---
 
 #  Análisis numérico.

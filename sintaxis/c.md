@@ -1,6 +1,7 @@
 ---
 title: C
 description: Sintaxis básica de C.
+nav_order: 2
 ---
 
 # C
@@ -481,13 +482,10 @@ int main(){
 ```
 
 
-
 ## Memoria y punteros
 
 ```c 
 #include <stdio.h>
-
-
 
 void swap(int *x, int *y){
 	int temp;
@@ -496,7 +494,6 @@ void swap(int *x, int *y){
 	*x=*y;
 	*y=temp;
 }
-
 
 int main () {
 
@@ -526,3 +523,44 @@ int main () {
 }
 ```
 
+
+## Estructuras
+
+Unaestructura es una colección de una ó más variables agrupadas bajo el mismo nombre. Son una buena herramienta para organizar datos complejos
+
+```c
+
+// Definición de estructura "punto"
+struct punto{
+	int x;
+	int y;
+};
+
+// Definción de estructura "rectangulo"
+struct rect{
+	struct punto pt1;
+	struct punto pt2;
+};
+
+```
+
+Para llamar a una variable dentro de una estructura la sintaxis es:
+
+```c
+struct rect pantalla;
+
+printf("Vertice de pantalla: (%d,%d)", pantalla.pt1.x, pantalla.pt1.y)
+```
+
+
+Es posible definir funciones sobre estructuras:
+
+```c
+struct punto makePoint(int x, int y){
+	struct point temp;
+	temp.x=x;
+	temp.y=y;
+	return temp;
+};
+
+```

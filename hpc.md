@@ -1,6 +1,7 @@
 ---
 title: HPC
 Descripción: Computación de alto desempeño.
+nav_order: 6
 ---
 
 # High Performance Computing (HPC)

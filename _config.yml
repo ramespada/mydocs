@@ -1,7 +1,7 @@
 title: "ramespada/mydocs"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: nil
-exclude : [ NO_BORRAR/, misc/, aq/, aq.md]
+exclude : [NO_BORRAR/, misc/, aq/, aq.md, readme]
 
 # Enable or disable the site search
 # Supports true (default) or false
@@ -41,55 +41,42 @@ defaults:
       has_children: true
       nav_order: 2
       #   layout: "page"
-      #  - 
-      #    scope:
-      #      path: "aq" # an empty string here means all files in the project
-      #    values:
-      #      parent: AQ
-      #      has_children: false
-      #      nav_order: 1
   - 
     scope:
       path: "sintaxis" # an empty string here means all files in the project
     values:
       parent: Sintaxis
       has_children: false
-      nav_order: 1
   -
     scope:
       path: "hpc" # an empty string here means all files in the project
     values:
       parent: HPC
       has_children: false
-      nav_order: 1
   -
     scope:
       path: "algoritmos" # an empty string here means all files in the project
     values:
       parent: Algoritmos
       has_children: false
-      nav_order: 1
   -                                                                         
     scope:
       path: "numerico" # an empty string here means all files in the project
     values:
       parent: Numerico
       has_children: false
-      nav_order: 1
   -                          
     scope:
       path: "matricial" 
     values:
       parent: Matricial
       has_children: false
-      nav_order: 1
   -                          
     scope:
       path: "gis" 
     values:
       parent: GIS
       has_children: false
-      nav_order: 1
 
   -                          
     scope:
@@ -97,5 +84,4 @@ defaults:
     values:
       parent: Otros
       has_children: false
-      nav_order: 1
 

@@ -1,6 +1,7 @@
 ---
 title: Sintaxis
 description: Crash-courses de sintaxis de algunos lenguajes de programación.
+nav_order: 2
 ---
 
 ## Table of contents

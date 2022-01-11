@@ -1,6 +1,7 @@
 ---
 title: C++
 description: Sintaxis básica de C++
+nav_order: 3
 ---
 
 # C++

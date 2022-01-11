@@ -1,7 +1,7 @@
 title: "ramespada/mydocs"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: nil
-exclude : [ NO_BORRAR/, misc/, aq/, aq.md,gis/,gis.md]
+exclude : [ NO_BORRAR/, misc/, aq/, aq.md]
 
 # Enable or disable the site search
 # Supports true (default) or false
@@ -85,7 +85,7 @@ defaults:
       nav_order: 1
   -                          
     scope:
-      path: "GIS" 
+      path: "gis" 
     values:
       parent: GIS
       has_children: false

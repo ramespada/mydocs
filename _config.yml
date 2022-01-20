@@ -38,9 +38,10 @@ defaults:
     scope:
       path: "" # an empty string here means all files in the project
     values:
+      layout: "page"
       has_children: true
+      has_toc: true
       nav_order: 2
-      #   layout: "page"
   - 
     scope:
       path: "sintaxis" # an empty string here means all files in the project
@@ -77,11 +78,16 @@ defaults:
     values:
       parent: GIS
       has_children: false
-
   -                          
     scope:
       path: "otros" 
     values:
       parent: Otros
+      has_children: false
+  -                          
+    scope:
+      path: "mca" 
+    values:
+      parent: MCA
       has_children: false
 

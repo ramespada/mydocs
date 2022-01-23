@@ -1,7 +1,7 @@
 title: "ramespada/mydocs"
 remote_theme: pmarsceill/just-the-docs
 color_scheme: nil
-exclude : [NO_BORRAR/, misc/, aq/, aq.md, readme]
+exclude : [NO_BORRAR/, misc/, readme]
 
 # Enable or disable the site search
 # Supports true (default) or false
@@ -86,8 +86,13 @@ defaults:
       has_children: false
   -                          
     scope:
+      path: "cayca" 
+    values:
+      parent: CAyCA
+      has_children: false
+  -                          
+    scope:
       path: "mca" 
     values:
       parent: MCA
       has_children: false
-

@@ -84,15 +84,3 @@ defaults:
     values:
       parent: Otros
       has_children: false
-  -                          
-    scope:
-      path: "cayca" 
-    values:
-      parent: CAyCA
-      has_children: false
-  -                          
-    scope:
-      path: "mca" 
-    values:
-      parent: MCA
-      has_children: false

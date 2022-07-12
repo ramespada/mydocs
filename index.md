@@ -5,7 +5,7 @@ nav_order: 1
 
 # Home
 
-> Repositorio de documentos didácticos para uso personal.
+> Repositorio de documentos didácticos de uso personal.
 
 
 

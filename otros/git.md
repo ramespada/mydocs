@@ -4,6 +4,7 @@
  
 
 ### Iniciar un repositorio:
+
 ```shell
 	git init
 ```
@@ -15,7 +16,17 @@
 	git add hello.txt
 ```
 
+Tambien realizarlo de forma interactiva con el comando:
+
+```shell
+	git add -p
+```
+
+esto inicia sesión de ensayo interactiva que permite elegir las partes de un archivo que queres añadir a la siguiente confirmación. Se te presentarán una serie de cambios y se te solicitará un comando. Utiliza `y` para preparar el fragmento, `n` para ignorarlo, `s` para dividirlo en fragmentos más pequeños, `e` para editarlo manualmente y q para salir.
+
+
 ### Ver estado de repositorio
+
 ```shell
 	git status
 ```
@@ -26,6 +37,16 @@
 	git commit -m "add hello file"
 ```
 Cada commit es como una *fotografía* del repositorio que queda guardada.
+
+Otras opciones de commit:
+```shell
+	git commit -a
+```
+
+Tambien se pude hacer un comit salteando el comando `add` a un archivo en particular:
+```shell
+	git commit <file>
+```
 
 
 ### Ver historia del repostorio
@@ -61,8 +82,6 @@ Cada commit es como una *fotografía* del repositorio que queda guardada.
 ```shell
 	git checkout myBranch
 ```
-
-
 
 ### Respositorio remoto
 
@@ -105,9 +124,25 @@ es lo mismo que hacer:
 ```
 
 
+### Customización:
 
 
-## Git command-line interface
++ `git config --global user.name <name>`
++ `git config --global user.email <email>`
++ `git config --global user.alias <alias-name> <git-command>`
++ `git config --system core.editor <editor>`
+
+
+Para ver archivo de configuración, y editar variables:
++ `git config --global --edit`
++ `git config --local  --edit`
++ `git config --system --edit`
+
+
+
+---
+
+## Resumen Git command-line interface
 
 - `git help <command>`: get help for a git command
 - `git init`: creates a new git repo, with data stored in the `.git` directory

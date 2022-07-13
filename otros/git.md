@@ -119,10 +119,44 @@ es lo mismo que hacer:
 
 ### Avanzado:
 
+Ir a commits antiguos y modificar historial, combinar commits, etc.
+
 ```shell
-	git rebase
+	git rebase -i HEAD~N
 ```
 
+### UNDO errores:
+
+`git restore` sirve para recuperar archivos borrados, o modificados y dejarlos como en el ultimo commit.
+
+```shell
+	git restore <archivo>
+```
+
+se puede usar de formar interactiva por *patches* con `git restore -p`
+
+
+Modificar ultimo commit:
+```shell
+	git commit --amend -m "correccion"
+```
+
+Borrar commits luego de cierto nivel, voy con checkout al lugar que quiero y luego
+```shell
+	git reset --herd
+```
+
+
+Recuperar commits borrados:
+
+```shell
+	git reflog
+```
+
+Recuperar branches borrados:
+```shell
+	git reflog
+```
 
 ### Customización:
 

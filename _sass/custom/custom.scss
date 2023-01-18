@@ -1,0 +1,38 @@
+/**{
+	color: #303030
+}
+*/
+
+
+
+/* TABLE TIPO MEMORIA */
+.memoria > .table-wraper{
+	min-width: 0% !important;
+}
+
+.memoria > table{
+	min-width:0%!important;
+	max-width:300px;
+    border-collapse: collapse;
+}
+.memoria th{
+
+}
+.memoria tr{
+	width:80px;
+	margin:0;
+}
+.memoria td ,
+.memoria th {
+	text-align:center;
+	padding:5px;
+	width: 50px;
+	background-color: #c0c0c0!important;
+	border: 3px solid #505050!important;
+}
+
+.memoria tr>th:nth-child(3n),
+.memoria tr>td:nth-child(3n){
+	border:none!important;
+	background-color:transparent!important;
+}

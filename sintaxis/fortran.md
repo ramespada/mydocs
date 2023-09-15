@@ -704,3 +704,42 @@ Los strings o **`CHARACTER`** tambien se representan con numeros enteros. Cada s
   integer, parameter :: ucs4  = selected_char_kind ('ISO_10646')
   character(kind=ucs4, len=26) :: mensaje
 ```
+
+## Estructuras
+
+Una estructura es una colección de una ó más variables agrupadas bajo el mismo nombre. Son una buena herramienta para organizar datos complejos
+
+```fortran
+type punto
+    real  :: x,y
+end type
+
+
+! Definción de estructura "rectangulo"
+type rectangulo{
+	type(punto) :: pt1
+	type(punto) :: pt2
+end type
+
+```
+
+Para llamar a una variable dentro de una estructura la sintaxis es:
+
+```fortran
+type(rectangulo) :: pantalla
+
+print*,"Vertice de pantalla: ",pantalla%pt1%x,pantalla%$pt1%y
+```
+
+Es posible definir funciones sobre estructuras:
+
+```fortran
+function punto makePoint(x,y) result(tmp)
+	implicit none
+	type (punto) :: tmp
+        real :: x, y
+	tmp%x=x
+	tmp%y=y
+end function
+```
+

@@ -57,3 +57,6 @@ gcc ejemplo.c -o ejemplo $(nc-config --libs --cflags)
 
 
 
+
+
+# Herramientas (NCO, CDO, NCKS)

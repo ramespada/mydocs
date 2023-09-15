@@ -1,3 +1,0 @@
-# OSM
-
-> Open Street Maps 

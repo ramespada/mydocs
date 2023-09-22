@@ -1,4 +1,4 @@
 hola:
-	echo "Hola mundo!"
+	@echo "Hola mundo!"
 chau:
 	echo "Chau mundo!"

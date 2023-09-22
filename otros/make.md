@@ -43,9 +43,14 @@ $ make
 echo "Hola mundo!"
 Hola mundo!
 ```
-vemos que se imprime el comando, y también se ejecuta el comando. Si volvemos a ejecutarlo va a continuar haciendo lo mismo, siempre y cuando no exista el archivo `hola`. 
+vemos que se imprime el comando, y también se ejecuta el comando. 
 
-Veamos que ocurre si por ejemplo cremos un archivo `hola` y luego ejecutamos `make`:
+Si queremos que se imprima el mensaje, pero no el comando, tenemos que agregar en el Makefile el simbolo de `@` antes del comando:
+```make
+hola:
+	@echo "Hola mundo!"
+```
+Si volvemos a ejecutarlo va a mostrar el mensaje "Hola mundo!" y va continuar haciendo lo mismo, siempre y cuando no exista el archivo `hola`. Veamos que ocurre si por ejemplo cremos un archivo `hola` y luego ejecutamos `make`:
 
 ```shell
 $ touch hola
@@ -53,7 +58,6 @@ $ make
 make: 'hola' is up to date.
 ```
 nos dice que `hola` está actualizado, ya que el archivo objetivo existe y sus depndencias/prerequisitos (en este caso niguno) no han sido alterados desde su creación.
-
 
 
 ### Ejemplo 2: Compilación de un programa
@@ -131,6 +135,18 @@ $ ls
 main.c Makefile scale.c
 ```
 
+Por último, supongamos que queremos compilar el programa con algun flag en particular, por ejemplo `-g`, para esto podemos definir una variable antes de las reglas de la siguiente forma:
+```make
+CFLAGS= -g
+main: main.o scale.o
+	gcc $(CFLAGS) -o main main.o scale.o
+main.o: main.c
+	gcc $(CFLAGS) -c main.c
+scale.o: scale.c
+	gcc $(CFLAGS) -c scale.c
+clean:
+	rm main main.o scale.o 
+```
 
 
 ## Sintaxis:
@@ -146,8 +162,8 @@ Asignaciones:
 + `?=` (asignación condicional):`CFLAGS ?= $(CC_FLAGS)`
 
 Funciones:
-+ `$(SRCS:.c=.o)`
-+ `$addprefix build/,$(OBJS))`
++ `$(SRCS:.c=.o)` reemplaza ".c" por ".o" en SRCS
++ `$addprefix build/,$(OBJS))` agrega "build/" a todos los archivos en OBJS
 + `$(if ..) $(or ..) $(and..)`
 + `$(foreach var, list,text )`
 + `$(value (VARIABLE))`
@@ -157,8 +173,17 @@ Funciones:
 + `$(info ..)`
 
 
+### Variables automáticas
 Nomenclatura dentro de un comando:
 + `$@`: current target (útil cuando hay muchos target)
 + `$<`: primer prerequisito.
 + `$^`: todos los prerequisitos.
++ `$?`: prerequisitos que hayan sido modificados.
++ `$|`: prerequisitos *order-only*
+
+
+### `.PHONY`
+`.PHONY: target` lo que hace es avisar a make que `target` no es un archivo y por lo tanto sirve para marcar reglas cuyo objetivo no es generar un archivo `target` sino simplemente ejecutar algunos comandos.
+
+### Dependencia automática
 

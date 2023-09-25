@@ -10,7 +10,7 @@ nav_order: 1
 
 ## PROMPT
 Cuando abras la terminal (con ``ctrl``+``T``) te vas a encontar con algo asi:
-```bash
+```shell
    username@pcname:workdir$
 ```
 
@@ -21,23 +21,23 @@ Lo primero que dice nuestro prompt es quien es el usuario que va a ejecutar las 
 Veamos como navegar en LINUX, esto es ir de una carpeta a otra y revisar el contenido.
 
 Para conocer la ubicacion absoluta en la que estamos (la del prompt es relativa a la carpeta principal del usuario) utilizamos:
-```bash
+```shell
  pwd
 ```
 
 Si queremos ver el contenido de la carpeta entonces escribimos:
-```bash
+```shell
  ls	#muestra contenido del directorio, probar con opciones: -a -l
 ```
 
 Para cambiar de directorio:
-```bash
+```shell
  cd	#cambio de directorio 
  cd ..	#cambio de directorio (ir directorio madre)
 ```
 
 Para borrar la pantalla de comandos escribimos:
-```bash
+```shell
 	clear	#limpia pantalla (tambien se puede con <ctl>+l )
 ```
 
@@ -45,20 +45,20 @@ Para borrar la pantalla de comandos escribimos:
 Veamos como crear/borrar directorios y archivos:
 
 Para crear/borrar una carpeta existen los siguientes comandos:
-```bash
+```shell
  mkdir carpeta		#crea directorio
  rmdir carpeta		#elimina directorio
  rm -r carpeta		#elimina directorio y todo su contenido (OJO!!)
 ```
 
 Para crear/borrar un archivo:
-```bash
+```shell
  touch archivo		#crea archivo/actualiza fecha de acceso
  rm archivo		#borrar archivo
 ```
 
 Otras acciones que podemos hacer con directorios y archivos son:
-```bash
+```shell
  cp archivo archivo_copiado	#copiar archivo 
  mv archivo archivo_movido	#mover archivo (tambien sirve para renombrar)
  ln -s archivo link_archivo	#crear link simbolico ("acceso directo")
@@ -78,7 +78,7 @@ Ademas muchos programas toman sus argumentos de un *stdin*, por default linkeado
 Las salidas de los comandos por default generalmente van a la pantalla, y los inputs se toman desde el teclado.
 Sin embargo podemos decidir donde llevar los stdin/stdout utilizando comandos de redireccion:
 
-```bash
+```shell
  echo "Hola"				#stdin   a  stdout
  read var				#stdin   a  var
  cat > archivo 				#stdin 	 a  archivo
@@ -91,7 +91,7 @@ Sin embargo podemos decidir donde llevar los stdin/stdout utilizando comandos de
 ## Archivos de texto:
 Para ver el contenido de un archivo de texto tenemos varias opciones:
 
-```bash
+```shell
  cat archivo		#muestra todo el contenido como stdout
  head archivo		#ver primer parte
  tail archivo		#ver última parte
@@ -102,7 +102,7 @@ Para ver el contenido de un archivo de texto tenemos varias opciones:
 ### Editores de texto
 Si buscamos un editor de texto con más funciones, algunos de los mas conocidos son:
 
-```bash
+```shell
 vim archivo		#Editor de textos. (Recomiendo este!!)
 nano archivo		#Editor de textos.
 emacs archivo		#Editor de textos.
@@ -111,7 +111,7 @@ emacs archivo		#Editor de textos.
 ### Editores *al vuelo*
 Un editor *on the fly* muy utilizado es:
 
-```bash
+```shell
 sed 's/ioeu/a/g' archivo	#Stream Editor
 ```
 
@@ -120,7 +120,7 @@ Las expresiones regulares son formulas abstractas que representan patrones de te
 
 Hay distintos comandos para trabajar con expresiones regulares, el mas conocido es ``grep``:
 
-```bash
+```shell
 	ls | grep "*.txt"	# mostrar archivos terminados en ".txt"
 ```
 
@@ -128,12 +128,12 @@ Hay distintos comandos para trabajar con expresiones regulares, el mas conocido 
 Hay dos comandos principales para buscar archivos:
 
 El primero es ``locate``, busca archivos por su nombre:
-```bash
+```shell
 locate <patron> 	#Busca archivos por nombre en una jerarquia de directorios
 ```
 
 El comando ``find`` incorpora otras variables para la busqueda:
-```bash
+```shell
  find <patron>   	#Busca en directorio archivos con patron y los lista.
  find <patron> -type d/f/l -size b/c/w/k/M/G -name "pattern"
  find <patron> \(-type d \) -and/-or/-not  \(-size M  \)
@@ -147,21 +147,21 @@ El comando ``find`` incorpora otras variables para la busqueda:
  Linux es un sistema operativo *multiusuario*, esto significa que muchos usuarios pueden estar utilizando la misma computadora en simultaneo.
 Cada usuario tiene un id, y tiene ciertos privilegios.
 
-```bash
+```shell
 id 			#ver id de usuario
 users			#ver users
 ```
 
 Para utilizar la terminal como otro usuario :
 
-```bash
+```shell
 su - user2		#ingreso a la cuenta de user2 como si fuese el
 su user2		#ingreso a la cuenta de user2, pero como user actual
 ```
 
 Para realizar operaciones como *super-user*:
 
-```bash
+```shell
 sudo			#ejecutar comando como superuser
 ```
 
@@ -170,7 +170,7 @@ file <archivo>			#te muestra tipo de archivo
 stat <archivo>  		#te muestra el estado del archivo
 
 Si llamamos a `ls -l` vemos que lista los archvivos en el directorio presente, por ejemplo:
-```bash
+```shell
 $> ls -l
 drwxr-xr-x  8 rama rama    69632 may 19 22:55  Desktop
 -rw-r--r--  1 rama rama     8980 abr  9 12:03  examples.desktop
@@ -189,16 +189,16 @@ El modo queda definido por tres numeros binarios (ó su equivalente hexadecimal)
 
 Para modificar el *modo* se utiliza el comando `chmod`:
 
-```bash
+```shell
  chmod <opcion> <archivo>	#cambiar modo de archivo 
 ```
 
-```bash
+```shell
  chmod +x script.sh	#agregar permiso de ejecución a todos.
 ```
 
 Para cambiar de propetiario y grupo de un archivo se utilizan los siguientes comandos:
-```bash
+```shell
  chown archivo	#change owner (propietario)
  chgrp archivo	#change group 
 ```
@@ -207,7 +207,7 @@ Para cambiar de propetiario y grupo de un archivo se utilizan los siguientes com
 Los sistemas operativos basados en linux son *multi-task*, esto quiere decir que la secuencia de ejecucion de programas la realizan de tal forma que pareciera que se estan realizando multiples tareas en simultaneo (esto es estrictamente asi cuando la computadora posee varias unidades de procesamiento, que hoy en dia es lo mas comun):
 
 Hay distintos comandos que nos dan informacion de los procesos que se estan ejecutando en la computadora:
-```bash
+```shell
  ps	      #muestra snapshot de procesos: -A  -s -ef
  top	      #muestra procesos en tiempo real
  jobs	      #muestra procesos activos
@@ -216,12 +216,12 @@ Hay distintos comandos que nos dan informacion de los procesos que se estan ejec
 ```
 
 Para dar/quitar prioridad a un proceso por el resto de los otros:
-```bash
+```shell
  bg		#manda proceso al fondo
  fg		#manda proceso arriba
 ```
 Para terminar un proceso:
-```bash
+```shell
  kill <PID>    # mata proceso (PID)  OJOOO CON ESTO!!
  killall	      #mata proceso por nombre
 ```
@@ -234,7 +234,7 @@ Una forma de ver todo lo que fue ejecutado en la terminal abrierta es con el com
 Podemos buscar lineas ejecutadas anteriormente aprentando ``<ctl>+r ``  y escribiendo el patron que se desea buscar.
 
 ### Ayuda 	
-```bash
+```shell
  help
  <comando> --help
  help grep	#informacion sobre uso del comando
@@ -251,20 +251,20 @@ Podemos buscar lineas ejecutadas anteriormente aprentando ``<ctl>+r ``  y escrib
 
 ### Compresión de archivos
 Para comprimir se puede utilizar el programa ``tar``, cuyas opciones principales son ``-c`` para comprimir y ``-x`` para descomprimir. 
-```bash 
+```shell 
  tar -cvf comprimido.tar.gz carpeta 
  tar -xzvf comprimido.tar.gz
 ```
 
 ### Manejo de paquetes y librerias
-```bash
+```shell
  apt-get --install <programa>	#instalar programa
 	--update		#actualizar sistema
 	--upgrade		#
 ``` 
 
 ### Otros
-```bash
+```shell
  sort lista	#ordena lista de strings
  uniq lista	#muestra todos los elementos de la lista sin repetirlos
  split archivo	#divide archivos en partes iguales
@@ -274,13 +274,13 @@ Para comprimir se puede utilizar el programa ``tar``, cuyas opciones principales
 ```
 
 ### Ejecutables/programas 
-```bash
+```shell
  ldd <ejecutable>		#lista las dependencias del ejecutable
  ./<ejecutable>			#forma típica de ejecución de binarios.
 ```
 
 ### Informacion del sistema
-```bash
+```shell
  date 	#fecha
  cal	#calendario cool
  uname 	#datos del sistema operativo

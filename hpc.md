@@ -4,9 +4,9 @@ description: Computación de alto desempeño.
 nav_order: 6
 ---
 
-# High Performance Computing (HPC)
+# Programación paralela
 
-> La computación de alto rendimiento implica usar la potencia de cálculo para resolver problemas complejos en ciencia, ingeniería y gestión.​ Para lograr este objetivo, la computación de alto rendimiento se apoya en tecnologías computacionales como los clusters, los supercomputadores o la computación paralela.
+> La computación de alto rendimiento implica usar la potencia de cálculo para resolver problemas complejos en ciencia, intengiería y gestión. <200b> Para lograr este objetivo, la computación de alto rendimiento se apoya en tecnologías computacionales como los clusters, los supercomputadores o la computación paralela.
 
 ## ¿ Qué es ?
 
@@ -22,54 +22,44 @@ Para entender la computación paralela es necesrio tener algunos conocimientos b
 La mayoría de las computadoras electrónicas siguen la arquitectura de *John Von Neuman* también conocida como *computadora de almacenamiento de programas*, en ella tanto los programas, las instrucciones y los datos se guardan en una memoria electronica.
 
 Los componentes de estas computadoras son:
-  + **Memoria**
-    + *RAM* (Random Access Memory) Es una memoria en la que el accesso a cualquier porción de información en ella demora el mismo tiempo (es una idealización).
-    + *cache* es la parte de la memoria de accesso más inmediato para un procesador.
-    + Cada espacio en la memoria tiene una dirección identificador llamado *memory adress*.
-  
-  + **Unidad de Control**
-
-  + **Unidad Lógica/Aritmética** (ejecuta operaciones lógicas y aritméticas)
-
-  + Dispositivo de **Input/Output**
-
-## Definiciones y conceptos:
-
-
-  + *Task*, Sección lógica discreta de un trabajo computacional. Es tipicamente un subprograma que es ejecutado por un precesador. Un programa paralelo consiste en multiples tasks corriendo en multiples procesadores.
-  
-  + *Core/CPU/Procesador*, Son las unidades básicas de procesamiento que ejecutan una sola tarea. A veces cuando una CPU tiene varios núcleos se la llama *socket*.
-
-  + *Nodo*, básicamente una computadora. Generalmente está compuesto de varias CPUs, y tiene memoria propia.
-
-  + *Cluster*, conjunto de nodos interconectados entre sí en red formando una *supercomputadora*. 
-
-  + *Pipelining*, (Tipo de computación paralela)
-  
-  + *Granularidad*, Relación entre tiempo de computación y comunicación.
-    + Fina: Poco trabajo computacional destinado a comunicación de eventos.
-    + Gruesa: Alto tiempo destinado a comunicar nodos.
-  
-  + *Overhead*, El tiempo requrido en coordinar tasks en lugar de estar haciendo trabajo útil. La coordinación puede incluir: iniciar tasks, sincronización, comunicación, uso de librerías especificas para paralelizar, y terminación.
-  
-  + *Escalabilidad*, Habilidad de mostrar un incremento proporcional en la velocidad con el incremento de recursos computacionales.
-
+- 1. **Memoria**
+  + RAM (*Random Access Memory*) Es una memoria en la que el accesso a cualquier porción de información en ella demora el mismo tiempo (es una idealización).
+  + *cache* es la parte de la memoria de accesso más inmediato para un procesador.
+  + Cada espacio en la memoria tiene una dirección identificador llamado *memory address*.
+- 2. **Unidad de Control**: se encarga de buscar instrucciones y datos de la memoria, decodificarlos y coordinar operaciones (*secuencialmente*) para resolver alguna tarea.
+- 3. **Unidad Lógica/Aritmética**. ejecuta operaciones lógicas y aritméticas.
+- 4. Dispositivo de **Input/Output**: hace referencia a la interfaz entre el humano (operador) y la computadora.
 
 ## Tipos de paralelismo (*taxonomía de Flynn*)
 Flynn clasificó las computadoras en base a dos características: el *paralelismo de procesos*  y *paralelismo de datos*.
 
-+ **SISD** *(Single Instruction, Single Data)*
-Es básicamente una computadora serial. Sólo se ejecuta una instrucción a la vez, y por lo tanto sólo una ruta de acceso a los datos es necesaria.
-
-+ **SIMD**  *(Single Instruction, Multiple Data)*
-Todos los procesos ejecutan la misma instrucción en cada ciclo temporal. Y cada unidad de procesamiento puede operar en distintos datos.
-Sirven para problemas caracterizados por alto grado de regularidad (por ejemplo en procesamiento de imagenes y computación gráfica).
-
-+ **MISD** *(Multiple Instruction, Single Data)* 
-Cada unidad de procesamiento actua de forma independiente por distintas vías de instrucciones. Pero hay un solo canal de datos que alimenta a las unidades de procesamiento. (Esta arquitectura no es muy común).
-
++ **SISD** *(Single Instruction, Single Data)* Es básicamente una computadora serial. Sólo se ejecuta una instrucción a la vez, y por lo tanto sólo una ruta de acceso a los datos es necesaria.
++ **SIMD**  *(Single Instruction, Multiple Data)* Todos los procesos ejecutan la misma instrucción en cada ciclo temporal. Y cada unidad de procesamiento puede operar en distintos datos. Sirven para problemas caracterizados por alto grado de regularidad (por ejemplo en procesamiento de imagenes y computación gráfica).
++ **MISD** *(Multiple Instruction, Single Data)*  Cada unidad de procesamiento actua de forma independiente por distintas vías de instrucciones. Pero hay un solo canal de datos que alimenta a las unidades de procesamiento. (Esta arquitectura no es muy común).
 + **MIMD** *(Multiple Instruction, Multiple Data)*
 Cada procesador puede trabajar en una vía de instrucciones distinta, y el acceso a los datos puede ser diferente para cada uno. Es el tipo más común de computadoras paralelas.
+
+
+## Definiciones y conceptos:
+
+ + *Core/CPU/Procesador* Son las unidades básicas de procesamiento que ejecutan una sola tarea. Las CPUs pueden estar organzadas en uno ó más *sockets*, cada *socket* con su propia memoria. Cuando una CPU tiene más de 2 sockets suele haber algun hardware que permita intercambiar memoria entre sockets.
+ + *Nodo*, básicamente una computadora. Generalmente está compuesto de varias CPUs, y tiene memoria propia.
+ + *Cluster*, conjunto de nodos interconectados entre sí en red formando una *supercomputadora*. 
+ + *Task* (tarea), Sección lógica discreta de un trabajo computacional. Es tipicamente un subprograma que es ejecutado por un precesador. Un programa paralelo consiste en multiples tasks corriendo en multiples procesadores.
+ + *Pipelining* descomponer un *task* en pasos realizados por distintas CPUS como en una linea de montaje. es un tipo de computación paralela.
+ + *Shared Memory* arquitectura donde los procesadores tienen acceso directo a una memoria física común. 
+ + *Symmetric Multi-Processor (SMP)*  arquitectura donde los procesadores commparten el mismo *address-space* y tienen igual acceso a todos los recursos, memoria, discos, etc.
+ + *Distributed Memory* es una arquitectura donde cada procesador tiene su propia memoria física, y el acceso a la memoria entre CPUs se da a traves de una red.
+ + *Comunicación* los *tasks* en paralelo necesitan intercambiar datos, a este intercambio le llamamos comunicación.
+ + *Syncronización* es la coordinación de *tasks* paralelos en tempo real, suele involucrar esperar a que terminen otros procesos, lo que hace que el tiempo de ejecución incremente.
+ + *Granularidad* relación entre tiempo de computación y comunicación.
+   + Fina: Poco trabajo computacional destinado a comunicación de eventos.
+   + Gruesa: Alto tiempo destinado a comunicar nodos.
+ + *sppedup* relación entre tiempo de ejecucción de la versión serial y paralela de un mismo programa.
+ + *Overhead*, El tiempo requrido en coordinar tasks en lugar de estar haciendo trabajo útil. La coordinación puede incluir: iniciar tasks, sincronización, comunicación, uso de librerías especificas para paralelizar, y terminación.
+ + *Paralelismos masivo* arquitecturas con miles ó millones de unidades de procesamiento.
+ + *Escalabilidad*, Habilidad de mostrar un incremento proporcional en la velocidad con el incremento de recursos computacionales.
+
 
 ## Límites y costos de la computación paralela
 
@@ -77,13 +67,13 @@ Cada procesador puede trabajar en una vía de instrucciones distinta, y el acces
 
 Establece que la velocidad de un programa paralelo viene dada por:
 
-<center>v= (1 - p)<sup>-1</sup></center> <!--[! $v = (1- p)^{-1}$ ]() -->
+<center>v= (1 - p)<sup>-1</sup></center>
 donde p: fracción de código paralelizable. 
 
 
 Considerando el número de procesadores:
 
-<center> v = (p/n + s)<sup>-1</sup></center> <!--[! $v = ( p/n + s)^{-1}$ ]() -->
+<center> v = (p/n + s)<sup>-1</sup></center>
 donde n: nuemero de procesadores, s:fración serial.
 
 Esto muestra que por más que nos forcemos en paralelizar al máximo un programa, este siempre tendrá un asíntota con respecto al numero de procesadores que usemos. Por ejemplo para un código que se puede paralelizar al 95\% nunca vamos a alcanzar una velocidad mayor a 20 veces la velocidad en serial.
@@ -99,6 +89,17 @@ Hay dos tipos básicos de arquitecturas de computadoras paralelas (*clusters*):
 En estas los procesadores tienen su propia memoria local. En ellas no existe el concepto de *global address space* a lo largo de todos los procesadores.
 Como cada procesador tiene su propia memoria local, opera de forma independiente. Por lo tanto tampoco aplica el concepto de *cache* cherency.
 
+##### Ventajas:
++ Escalabilidad de la memoria: más procesadores más memoria.
++ Cada procesador accede rapidamente a su memoria sin interferencia del resto.
++ Menos costosas y modulares.
+
+##### Desventajas:
++ El programador se tiene que ocupar de la comunicación entre procesadores.
++ Puede ser dificil mapear estructras de datos basadas en memoria global a este tipo de organización de memoria.
++ Acceso no uniforme a memoria. ya que la memoria de otros nodos tarda más que la local.
+
+
 #### *Shared Memory*
 
 En teoría estas arquitecturas permiten que los procesadores accedan a cualquier porción de la memoria libremente. Aunque los procesadores operen independientemente todos comparten los mismos recursos de memoria.
@@ -109,13 +110,20 @@ Dentro de las arquitecturas de memoria compartida existen dos tipos básicos:
 
   + **Non-Uniform Memory Access (NUMA)** Comumente formados por varios UMA interconectados. El acceso a memoria no es equitativo entre procesadores, aunque todos tengan acceso. 
 
+##### Ventajas:
++ Tener un global address-space hace más facil la programación.
++ Compartir datos entre tasks es rapido y uniforme deido a la proximidad a las CPUs.
+
+##### Desventajas:
++ Falta de escalabilidad entre memoria y CPUs. Más CPUs puede incrementa el tráfico.
++ el programador tiene se tiene que ocupar de la sincronización que aseguren un correcto acceso a la memoria global.
 
 ## Modelos de programación paralela
 
 Existen varios modelos de programación paralela en uso:
   + *Shared memory* (sin threads)
     + Es el modelo más sencillo.
-    + Todos los tasks comparten un mismo *adress space* donde pueden leer y escribir asincronicamente.
+    + Todos los tasks comparten un mismo *address space* donde pueden leer y escribir asincronicamente.
     + Varios mecanismos como *locks* y *semaforos* son utilizados para controlar el acceso a la memoria compartida.
     + Ejemplos: **SHMEM**
 
@@ -133,24 +141,20 @@ Existen varios modelos de programación paralela en uso:
 
   + *Paralelización de datos*
     + También conocido como **PGAS** (*Partitioned Global Address space*)
-    + El *adress space* es tratado globalmente.
+    + El *address space* es tratado globalmente.
     + La mayoria del trabajo paralelo se focaliza en realizar operaciones en un conjunto de datos.
     + Los datos generalmente se organizan en una estructura común como arrays o cubos.
     + Ejemplos: **Coarray** (Fortran)
   
 ## Diseño de programas paralelos
 
-Sin duda, el primer paso a desarrollar un programa paralelo es entender en primer lugar el problema que se quiere resolver en paralelo. 
+Sin duda, el primer paso a desarrollar un programa paralelo es entender en primer lugar el problema que se quiere resolver en paralelo. Y analizar antes si el problema es realmente paralelizable.
+Es importante identificar:
+- *hotspots*
+- *cuellos de botella* del programa
+- inhibidores al paralelismo (el más común es la dependencia de datos).
 
-Y analizar antes si el problema es realmente paralelizable.
-
-Identificar *hotspots*
-
-Identificar *cuellos de botella* del programa
-
-Identificar inhibidores al paralelismo (el más común es la dependencia de datos).
-
-Investigar otros algoritmos posibles.
+y comparar con otros algoritmos posibles (si existen).
 
 
 ### Paralelismo automatico

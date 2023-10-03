@@ -162,10 +162,8 @@ Existen varios modelos de programación paralela en uso:
     + Ejemplos: **Coarray** (Fortran)
  
 
-
 A continuación se muestra una estructura típica de cluster y las herramientas que nos permiten interactuar con las distintas partes del mismo
 ![](hpc/imgs/cluster_network.png)
-
 
 
  

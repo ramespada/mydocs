@@ -15,7 +15,7 @@ Sus objetivo es ser *estandarizado* , *portable* , *discreto*, *eficiente* y *f�
 Tiene soporte para Fortran y C/C++.
 
 Sus componentes principales son:
- 1. ** Instrucciones para el compilador **
+ 1. **Instrucciones para el compilador**
     + Aparecen como comentarios en el código y son ignorados por el compilador en caso de no estar usando *openMP*.
     + Se utilizan para:
       - Delimitar las partes del código a ser paralelizadas.
@@ -24,7 +24,7 @@ Sus componentes principales son:
       - Serializar partes del código. Sincronizar los threads.
 
 
- 2. ** Librerías con rutinas en tiempo real/de corrida **
+ 2. **Librerías con rutinas en tiempo real/de corrida**
    + Aparecen como funciones ó subrutinas.
    + Se utilizan para:
       - setear y consultar numero de threads.
@@ -32,7 +32,7 @@ Sus componentes principales son:
       - Setear paralelismo anidado.
       - Setear, inicializar y terminar *locks*
 
- 3. ** Variables de ambiente **
+ 3. **Variables de ambiente**
    + Se pueden setear en el código ó fuera de él.
    + Se utilizan para:
       - Setear numero de threads.
@@ -43,7 +43,6 @@ Sus componentes principales son:
       - Setear tamaño de *thread stack*.
       - Seteear la política de espera de threads.
     
-
 ### Definiciones:
 
   + *Modelo de memoria compartida*
@@ -76,9 +75,9 @@ Sus componentes principales son:
     end program
 ```
 
-Al compilar, para que el script soporte *openMP* hay que agregar un comando para habilitarlo, para GNU es: ` gfortran hola_mundo.f -fopenmp `
+Al compilar, para que el script soporte *openMP* hay que agregar un comando para habilitarlo, para GNU es: `gfortran hola_mundo.f -fopenmp`
 
-Para correr un programa compilado con openMP: ` mpirun -np 4 a.out `
+Para correr un programa compilado con openMP: `mpirun -np 4 a.out`
 
 
 ### Regiones paralelas:
@@ -177,11 +176,11 @@ Dificil de cargar balancce
 ```fortran
 !$OMP PARALLEL
   !$OMP SECTIONS
-      !$OMP SECTION
+      !$omp section
         call do_a()
-      !$OMP SECTION
+      !$omp section
         call do_b()
-      !$OMP SECTION
+      !$omp section
         call do_c()
   !$OMP END SECTIONS
 !$OMP END PARALLEL

@@ -16,6 +16,21 @@ nav_order: 6
 
 Para resolver un problema en forma paralela, este debe ser capaz de ser descompuesto en partes que se resuelvan simultaneamente. Los recursos computacionales usados pueden ser computadoras con multiples procesadores (*cores/núcleos*) ó varias computadoras en red.
 
+Ejemplo de problema paralelo: los partidos de la copa del mundo.
+
+![](hpc/imgs/qatar2022.png)
+
+En cada etapa (octavos, cuartos, semi y final) los partidos pueden ser ejecutados en forma paralela, mientras que la ejecución de etapas debe ser en forma serial. Es decir este problema es serial en el sentido horizontal, y paralelo en el sentido vertical.
+
+## Por que es importante aprender HPC
+
+> Ley de Moore: El número de transistores en un circuito integrado se duplica cada 2 años.
+
+Sin embargo, el número de ciclos que una CPU puede ejecutar por segundo (*clock-speed*) no aumenta desde el año 2000 (Intel Pentum 4). Esto se debe a la discipación de calor en los transistores. 
+
+Por lo tanto, la única forma de mejorar la performance es desarrollar sistemas multi-core.
+
+
 ## Arquitectura de Von Neuman
 
 Para entender la computación paralela es necesrio tener algunos conocimientos básicos de como funciona una computadora. 
@@ -59,7 +74,7 @@ Cada procesador puede trabajar en una vía de instrucciones distinta, y el acces
  + *Overhead*, El tiempo requrido en coordinar tasks en lugar de estar haciendo trabajo útil. La coordinación puede incluir: iniciar tasks, sincronización, comunicación, uso de librerías especificas para paralelizar, y terminación.
  + *Paralelismos masivo* arquitecturas con miles ó millones de unidades de procesamiento.
  + *Escalabilidad*, Habilidad de mostrar un incremento proporcional en la velocidad con el incremento de recursos computacionales.
-
+ + *FLOPs*: de "Floating Point operation per second" (e.g suma, resta, multiplicacion, division) es una medida de performance.
 
 ## Límites y costos de la computación paralela
 
@@ -145,7 +160,15 @@ Existen varios modelos de programación paralela en uso:
     + La mayoria del trabajo paralelo se focaliza en realizar operaciones en un conjunto de datos.
     + Los datos generalmente se organizan en una estructura común como arrays o cubos.
     + Ejemplos: **Coarray** (Fortran)
-  
+ 
+
+
+A continuación se muestra una estructura típica de cluster y las herramientas que nos permiten interactuar con las distintas partes del mismo
+![](hpc/imgs/cluster_network.png)
+
+
+
+ 
 ## Diseño de programas paralelos
 
 Sin duda, el primer paso a desarrollar un programa paralelo es entender en primer lugar el problema que se quiere resolver en paralelo. Y analizar antes si el problema es realmente paralelizable.

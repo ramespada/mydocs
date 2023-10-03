@@ -6,7 +6,24 @@ description: Message Passing Interface
 
 > MPI es una especificación para desarrolladores y usuarios de librerias de pasaje de mensajes. Su objetivo es ser una interfaz práctica, portable, eficiente y flexible. Una gran ventaja de MPI es que está **adaptada para cualquier arquitectura de memoria** (distribuida, compartida e híbrida).
 
-Tiene soporte para Fortran, C/C++  (la sintaxis es casi idéntica).
+
+
+Tiene soporte para Fortran, C/C++. Para invocar la libreria usamos:
+
+
+|C | fortran |
+|---|---|
+|`#include "mpi.h"`|`include 'mpif.h` |
+
+
+Luego la sintaxis es casi idéntica. En C, los comandos siguen la siguiente sintaxis:
+```c
+rc = MPI_Xxxxx(param, ...)
+```
+En fortran la sintaxis es:
+```fortran
+call MPI_XXXXX(param,..., ierr)
+```
 
 ### Ejemplo simple:
 Un programa  *hola mundo* paralelizado con MPI en fortran sería:

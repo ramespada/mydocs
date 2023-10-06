@@ -5,11 +5,7 @@ description: Open Multi-Processing
 
 # OpenMP
 
-> **OpenMP** (*Open Multi-Processing*) es un conjunto de comandos y rutinas, portables y escalables, que permite la paralelización de tareas dentro de un programa.
-
-Trabaja con paralelización **multi-threaded** y **shared memory** (de memoria compartida).
-Sus objetivo es ser *estandarizado* , *portable* , *discreto*, *eficiente* y *fácil* de usar.
-Tiene soporte para Fortran y C/C++.
+> **OpenMP** (*Open Multi-Processing*) es una un conjunto de comandos y rutinas, portables y escalables, que permite la paralelización de tareas dentro de un programa. Trabaja con paralelización **multi-threaded** y **shared memory** (de memoria compartida). Sus objetivo es ser *estandarizado* , *portable* , *discreto*, *eficiente* y *fácil* de usar. Tiene soporte para Fortran y C/C++.
 
 Sus componentes principales son:
 1. **Instrucciones para el compilador**
@@ -38,19 +34,18 @@ Sus componentes principales son:
   - Setear la política de espera de threads.
    
 ### Definiciones:
-+ *Modelo de memoria compartida*
-+ **Proceso:** 
-  - Unidad de ejecución independiente.
-  - Tiene su propio estado y su *address-space*
-+ **Thread:**
-  - Cada proceso puede tener varios *threads*
-  - Todos los threads de un proceso comparten *estado* y *address-space*
++ **Modelo de memoria compartida**: multiples procesadores tienen acceso al mismo espacio de memoria.
++ **Proceso**: Unidad de ejecución independiente. Tiene su propio estado y su *address-space*
++ **Thread**: Cada proceso puede tener varios *threads*. Todos los threads de un proceso comparten *estado* y *address-space*
 + Modelo **Fork-Join** 
 
 
 #### Ejemplo simple: Hola mundo
 
-En fortran:
+OpenMP ya está incluido en la mayoría de los compiladores comunmente utilizados, por lo que no requiere ninguna compilación ni instalación.
+
+Un programa "Hola mundo" en fortran sería:
+
 ```fortran
 program hola
   use omp_lib
@@ -59,12 +54,28 @@ program hola
   !$omp end parallel
 end program
 ```
+
+En C sería:
+```c
+#include <stdio.h>
+
+int main(){
+   #pragma omp parallel
+   {
+        //printf("Hola mundo!\n");
+        printf("Hola mundo! %d/%d\n",omp_get_thread_num(),omp_get_num_threads());
+   }
+}
+```
+
 Al compilar, para que el script soporte *openMP* hay que agregar un comando para habilitarlo, para GNU es: 
+
 ```shell
 $> gfortran -fopenmp hola_omp.f90
 ```
 
 Para correr un programa compilado con openMP primero hay que indicar el numero de threads y luego ejecutarlo
+
 ```shell
 export OMP_NUM_THREADS=4
 ./a.out
@@ -72,7 +83,13 @@ export OMP_NUM_THREADS=4
 
 ### Regiones paralelas:
 
-Para indicar que comienza una porción del código a ser corrido en paralelo se indica: `!$omp parallel` y se termina con `!$omp end parallel`. Lo que queda encerrado entre ese bloque se paraleliza. En esta región del código se asigna un **thread master** y varios **slave threads**. 
+Para indicar que comienza una porción del código a ser corrido en paralelo se indica: 
+```fortran
+!$omp parallel
+  !(Acá va la region paralela)
+!$omp end parallel
+```
+Lo que queda encerrado entre ese bloque se paraleliza. En esta región del código se asigna un **thread master** y varios **slave threads**. 
 
 #### Interacción entre threads**
 

@@ -30,6 +30,12 @@ Sin embargo, el número de ciclos que una CPU puede ejecutar por segundo (*clock
 
 Por lo tanto, la única forma de mejorar la performance es desarrollar sistemas multi-core.
 
+## Concurrencia vs Paralelismo
+
+La **concurrencia** es cuando tenemos multiples tareas (*tasks*) logicamente activas al mismo tiempo. Pero puede que no se ejecuten al mismo tiempo. En cambio el **paralelismo** es un tipo de concurrencia en el cual las distintas tareas estan efectivamente activas al mismo tiempo.
+
+![](hpc/imgs/parallel_vs_concurrent.png)
+
 
 ## Arquitectura de Von Neuman
 

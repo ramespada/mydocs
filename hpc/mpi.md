@@ -6,20 +6,19 @@ description: Message Passing Interface
 
 > MPI es una especificación para desarrolladores y usuarios de librerias de pasaje de mensajes. Su objetivo es ser una interfaz práctica, portable, eficiente y flexible. Una gran ventaja de MPI es que está **adaptada para cualquier arquitectura de memoria** (distribuida, compartida e híbrida).
 
+Implementaciones de MPI: MPICH, OpenMPI, Intel MPI.
 
-
-Tiene soporte para Fortran, C/C++. Para invocar la libreria usamos:
-
+Tiene soporte para C, C++ y Fortran. Para invocar la libreria usamos:
 
 |C | fortran |
 |---|---|
 |`#include "mpi.h"`|`include 'mpif.h` |
 
-
-Luego la sintaxis es casi idéntica. En C, los comandos siguen la siguiente sintaxis:
+Luego la sintaxis es casi idéntica para C/C++ y Fortran. En C, los comandos siguen la siguiente sintaxis:
 ```c
 rc = MPI_Xxxxx(param, ...)
 ```
+
 En fortran la sintaxis es:
 ```fortran
 call MPI_XXXXX(param,..., ierr)
@@ -29,27 +28,36 @@ call MPI_XXXXX(param,..., ierr)
 Un programa  *hola mundo* paralelizado con MPI en fortran sería:
 
 ```fortran
-    program hola
-        include 'mpif.h'
-        
-        !Código serial...
-        
-        call MPI_INIT()
+program hola
+    include 'mpif.h'
+    
+    !Código serial...
+    
+    call MPI_INIT()
 
-            print*, "Hola mundo!"
+        print*, "Hola mundo!"
 
-        call MPI_FINALIZE()
+    call MPI_FINALIZE()
 
-        !Código serial...
-    end program
+    !Código serial...
+end program
 ```
-Para compilar: ` mpif90  hola_mundo.f `.
-Para correr: ` mpirun -np 4 a.out `.
+Para compilar: 
+```shell
+$> mpif90  hola_mundo.f 
+```
+Para correr: 
+```shell
+$> mpirun -np 4 a.out 
+```
 
 ### Comunicadores y Grupos
+
 MPI usa unos objetos llamados **comunicadores** (`comm`) y **grupos** (`group`) para definir que colección de procesos se comunican con otros.
 
 La mayoría de las rutinas de MPI requieren que se especifique el comunicador como argumento.
+Hay un type `MPI_Comm` y hay un comunicador predeterminado `MPI_COMM_WORLD`.
+
 
 #### Rango 
 Dentro de cada comunicador, cada proceso tiene su propio y único identificador. Cuando un proceso se inicia un identificador (un número entero) es asignado por el sistema. A los rangos aveces tambien se los llaman *task ID*. Los rangos son contiguos y empiezan en 0.
@@ -62,36 +70,19 @@ Generalmente las rutinas MPI retornan un parametro de error, sin embargo el comp
 
 ### Rutinas de manejo de ambiente:
 
-#### ` MPI_INIT() `
-Inicia ambiente de ejecución.
+Principales rutinas en MPI:
++ `MPI_INIT() `: Inicia ambiente de ejecución.
++ `MPI_FINALIZE(*ierr*)`: Termina la ejecución de MPI.
++ `MPI_COMM_SIZE(*comm, size, ierr*)` Retrona el numero de procesos especificados en el comunicador.
++ `MPI_COMM_RANK(*comm, size, ierr*)` Retorna el rango del comunicador.
 
-#### ` MPI_COMM_SIZE(*comm,size,ierr*) `
-Retrona el numero de procesos especificados en el comunicador.
-
-#### ` MPI_COMM_SIZE(*comm,size,ierr*) `
-Retorna el rango del comunicador.
-
-#### ` MPI_ABORT(*comm,errorcode,ierr*) ` 
-Finaliza el proceso asociado al comunicador.
-
-#### ` MPI_GET_PROCESOR_NAME(*name, resultlength,ierr*) `
-Retorna el nombre del proceso y el tamaño del nombre.
-
-#### ` MPI_GET_VERSION(*version, subversion, ierr*) `
-Devuelve la version de MPI que está siendo implementada por al librería.
-
-#### ` MPI_INITIALIZED(*flag, ierr*) `
-Indica si l `MPI_INIT` ha sido llamada. (`flag` es un booleano)
-
-#### ` MPI_WTIME() `
-Retorna el tiempo transcurrido  (en segundos) en la llamada al proceso.
-
-#### ` MPI_WTICK() `
-retorna la resolución en segundos de `MPI_Wtime`.
-
-#### ` MPI_FINALIZE(*ierr*) `
-Termina la ejecución de MPI.
-
+Otras rutinas:
++ `MPI_ABORT(*comm,errorcode,ierr*)` Finaliza el proceso asociado al comunicador.
++ `MPI_GET_PROCESOR_NAME(*name, resultlength,ierr*) ` Retorna el nombre del proceso y el tamaño del nombre.
++ `MPI_GET_VERSION(*version, subversion, ierr*) ` Devuelve la version de MPI que está siendo implementada por al librería.
++ `MPI_INITIALIZED(*flag, ierr*) ` Indica si l `MPI_INIT` ha sido llamada. (`flag` es un booleano)
++ `MPI_WTIME() ` Retorna el tiempo transcurrido  (en segundos) en la llamada al proceso.
++ `MPI_WTICK() ` retorna la resolución en segundos de `MPI_Wtime`.
 
 
 ## Comunicación punto a punto
@@ -106,6 +97,7 @@ Hay distintos tipos de rutinas de envío y recepción usadas para distintos prop
 Cualquier tipo de rutina de envío está asociada a una de recivo.
 
 MPI también provée rutinas asociadas a operaciones envío-recivo tal como aquellas usadas para mensajes de espera de arrivo ó probar si un mensaje ha llegado.
+
 
 
 #### Buffering
@@ -125,7 +117,7 @@ El espacio buffer:
 + Tiene un impacto en la performance ya que habilita que la comunicación sea asincrónica.
 
 #### Blocking
-Las rutinas de MPI *point-to-point* puedn ser usadas en modo *bloquing* ó *non-bloquing*.
+Las rutinas de MPI *point-to-point* puedn ser usadas en modo *blocking* ó *non-blocking*.
   + **Blocking**
     + Una rutina de envío no *vuelve* hasta que esté a salvo de modificar los datos envíados para reusarse. A salvo significa que no afecta la información que debe ser recibida por el task.
     + Puede ser sincrónica ó asincrónica.
@@ -148,13 +140,13 @@ Las rutinas de MPI *point-to-point* puedn ser usadas en modo *bloquing* ó *non-
 
 Las comunicaciones punto a punto generalmente tienen la siguiente lista de argumentos:
 
-+ `**buffer**`  adress space del programa que referencia los datos a ser enviados ó recibidos. En muchos casos es simplemente el nombre de la variable que es enviada/recibida.
-+ `**count** ` Indica el numero de elementos que son eviados.
-+ `**type**` Por razones de portabilidad MPI predefine sus propios *data types*, para fortran los más importantes son: `MPI_LOGICAL`, `MPI_INTEGER`, `MPI_REAL`, `MPI_DOUBLE_PRECISION`, `MPI_COMPLEX`, `MPI_CHARACTER`.  
-+ `**dest**` (*destino*) Se especifica como el rango del proceso recibido.
++ `**buffer**`  address space del programa que referencia los datos a ser enviados ó recibidos. En muchos casos es simplemente el nombre de la variable que es enviada/recibida.
++ `**count** `  Indica el numero de elementos que son eviados.
++ `**type**`    Por razones de portabilidad MPI predefine sus propios *data types*, para fortran los más importantes son: `MPI_LOGICAL`, `MPI_INTEGER`, `MPI_REAL`, `MPI_DOUBLE_PRECISION`, `MPI_COMPLEX`, `MPI_CHARACTER`.  
++ `**dest**`   (*destino*) Se especifica como el rango del proceso recibido.
 + `**source**` (*origen*) Se especifica como el rango del proceso enviado.
-+ `**tag**` Numero arbitrario entero no negativo, asignado por el programador para identificar el mensaje univocamente.
-+ `**comm**`  El comunicador.
++ `**tag**`    Numero arbitrario entero no negativo, asignado por el programador para identificar el mensaje univocamente.
++ `**comm**`   El comunicador.
 + `**status**` Para una operación de recepción indica el origen del mensaje y el tag del mismo. En fortran es un array de enteros de tamaño `MPI_STATUS_SIZE()`
 + `**request**` Para emision/recepción no bloquada, ya que estas operaciones pueden volver antes de que el pedido de sistema de buffer space sea obtenido. Puede ser utilizado en las rutinas de `WAIT` para determinar si la operación fue completada. En fortran es un entero.
 
@@ -169,30 +161,30 @@ Ejemplos:
 ### Rutinas de paso de mensajes
 
 ** Bloqueadas **
-
-  + `MPI_SEND(*buf, count, type, dest, tag, comm, ierr *)`
-  + `MPI_RECV(*buf, count, type, source, tag, comm, status, ierr*)`
-  + `MPI_SSEND(* *)`
-  + `MPI_SENDRECV(* *)`
-  + `MPI_WAIT(* *)`
-  + `MPI_WAITANY(* *)`
-  + `MPI_WAITALL(* *)`
-  + `MPI_WAITSOME(* *)`
-  + `MPI_PROBE(* *)`
-  + `MPI_GET_COUNT(* *)`
+ + `MPI_SEND(*buf, count, type, dest, tag, comm, ierr *)`
+ + `MPI_RECV(*buf, count, type, source, tag, comm, status, ierr*)`
+ + `MPI_SSEND(* *)`
+ + `MPI_SENDRECV(* *)`
+ + `MPI_WAIT(* *)`
+ + `MPI_WAITANY(* *)`
+ + `MPI_WAITALL(* *)`
+ + `MPI_WAITSOME(* *)`
+ + `MPI_PROBE(* *)`
+ + `MPI_GET_COUNT(* *)`
  
 
 ** No-Bloqueadas **
-  + `MPI_ISEND(*buf, count, type, dest, tag, comm, request, ierr *)`
-  + `MPI_IRECV(*buf, count, type, source, tag, comm, request, ierr*)`
-  + `MPI_ISSEND(*buf, count, type, dest, tag, comm, request, ierr*)`
-  + `MPI_TEST(* *)`
-  + `MPI_TESTANY(* *)`
-  + `MPI_TESTALL(* *)`
-  + `MPI_TESTSOME(* *)`
-  + `MPI_IPROBE(* *)`
+ + `MPI_ISEND(*buf, count, type, dest, tag, comm, request, ierr *)`
+ + `MPI_IRECV(*buf, count, type, source, tag, comm, request, ierr*)`
+ + `MPI_ISSEND(*buf, count, type, dest, tag, comm, request, ierr*)`
+ + `MPI_TEST(* *)`
+ + `MPI_TESTANY(* *)`
+ + `MPI_TESTALL(* *)`
+ + `MPI_TESTSOME(* *)`
+ + `MPI_IPROBE(* *)`
 
 ---
+
 ## Comunicación colectiva
 La comunicación colectiva involucra a todos los procesos en el alcance del comunicador. 
   + Todos los procesos por default son miembors del comunicador `MPI_COMM_WORLD`.

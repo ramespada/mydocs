@@ -4,13 +4,11 @@ description: Message Passing Interface
 ---
 # Message Passing Interface (MPI)
 
-> MPI es una especificación para desarrolladores y usuarios de librerias de pasaje de mensajes. Su objetivo es ser una interfaz práctica, portable, eficiente y flexible. Una gran ventaja de MPI es que está **adaptada para cualquier arquitectura de memoria** (distribuida, compartida e híbrida).
+> MPI es una especificación para desarrolladores y usuarios de librerias de pasaje de mensajes. Su objetivo es ser una interfaz práctica, portable, eficiente y flexible. Una gran ventaja de MPI es que está **adaptada para cualquier arquitectura de memoria** (distribuida, compartida e híbrida). Implementaciones de MPI: MPICH, OpenMPI, Intel MPI. Tiene soporte para C, C++ y Fortran. 
 
-Implementaciones de MPI: MPICH, OpenMPI, Intel MPI.
+Para invocar la libreria usamos:
 
-Tiene soporte para C, C++ y Fortran. Para invocar la libreria usamos:
-
-|C | fortran |
+| C | fortran |
 |---|---|
 |`#include "mpi.h"`|`include 'mpif.h` |
 
@@ -25,44 +23,50 @@ call MPI_XXXXX(param,..., ierr)
 ```
 
 ### Ejemplo simple:
+
 Un programa  *hola mundo* paralelizado con MPI en fortran sería:
 
 ```fortran
 program hola
+    implicit none
+    integer :: ierr
+
     include 'mpif.h'
-    
+
     !Código serial...
-    
-    call MPI_INIT()
-
-        print*, "Hola mundo!"
-
-    call MPI_FINALIZE()
-
+    call MPI_INIT(ierr)
+        print '("Hola mundo!")'
+    call MPI_FINALIZE(ierr)
     !Código serial...
 end program
 ```
-Para compilar: 
+
+Para compilarlo: 
 ```shell
 $> mpif90  hola_mundo.f 
 ```
-Para correr: 
+
+Luego lo ejecutamos así:
 ```shell
 $> mpirun -np 4 a.out 
 ```
 
-### Comunicadores y Grupos
+### Comunicadores, Grupos y `rank`
 
 MPI usa unos objetos llamados **comunicadores** (`comm`) y **grupos** (`group`) para definir que colección de procesos se comunican con otros.
+
+Los *comunicadores* definen un *grupo* de procesos que tienen la capacidad de comunicarse entre si. En este grupo a cada proceso se le asigna un `rank` único (también llamado *task ID*) que le permite comunicarse explicitamente con el resto.
 
 La mayoría de las rutinas de MPI requieren que se especifique el comunicador como argumento.
 Hay un type `MPI_Comm` y hay un comunicador predeterminado `MPI_COMM_WORLD`.
 
 
-#### Rango 
 Dentro de cada comunicador, cada proceso tiene su propio y único identificador. Cuando un proceso se inicia un identificador (un número entero) es asignado por el sistema. A los rangos aveces tambien se los llaman *task ID*. Los rangos son contiguos y empiezan en 0.
 
+La comunicación se basa en operaciones de envio (`send`) y recepción (`receive`) entre procesos.
+
 Se utilizan para especificar el origen y destino de los mensajes. Comunmente se usa condicionalmente por la aplicación para controlar la ejecución del programa (so rank==0 hacer esto / si rank==1 hacer esto otro) 
+
 
 #### Manejo de Errores
 Generalmente las rutinas MPI retornan un parametro de error, sin embargo el comportamiento standard de MPI es abortar si un error ocurre.
@@ -71,7 +75,7 @@ Generalmente las rutinas MPI retornan un parametro de error, sin embargo el comp
 ### Rutinas de manejo de ambiente:
 
 Principales rutinas en MPI:
-+ `MPI_INIT() `: Inicia ambiente de ejecución.
++ `MPI_INIT(*ierr*) `: Inicia ambiente de ejecución.
 + `MPI_FINALIZE(*ierr*)`: Termina la ejecución de MPI.
 + `MPI_COMM_SIZE(*comm, size, ierr*)` Retrona el numero de procesos especificados en el comunicador.
 + `MPI_COMM_RANK(*comm, size, ierr*)` Retorna el rango del comunicador.
@@ -99,7 +103,6 @@ Cualquier tipo de rutina de envío está asociada a una de recivo.
 MPI también provée rutinas asociadas a operaciones envío-recivo tal como aquellas usadas para mensajes de espera de arrivo ó probar si un mensaje ha llegado.
 
 
-
 #### Buffering
 Idealmente, toda operación de envío está perfectamente sincronizada con la operación de recibo. Esto raramente ocurre. De alguna forma u otra MPI tiene que ser capaz de manejarse con datos almacenados cuando un dos tasks están fuera de sincronía.
 
@@ -110,11 +113,12 @@ Por ejemplo:
 MPI decide que pasa con estos datos. Tipicamente hay un area buffer del sistema reservada para sostener el transito.
 
 El espacio buffer:
-+ No está a ala vista del usuario (lo maneja la librería MPI).
++ No está a la vista del usuario (lo maneja la librería MPI).
 + Usa recursoss finitos.
 + Suele ser misterioso y no bien documentado.
 + Puede existir en el emisor, receptor ó ambos.
 + Tiene un impacto en la performance ya que habilita que la comunicación sea asincrónica.
+
 
 #### Blocking
 Las rutinas de MPI *point-to-point* puedn ser usadas en modo *blocking* ó *non-blocking*.
@@ -136,9 +140,10 @@ Las rutinas de MPI *point-to-point* puedn ser usadas en modo *blocking* ó *non-
 **Justicia / Fairnes**
       + MPI no garantiza *justicia*, esto quiere decir que si dos tasks envían una señal al mismo taks, entonces sólo uno de los mensajes se completará.
 
+
 #### Rutinas y argumentos
 
-Las comunicaciones punto a punto generalmente tienen la siguiente lista de argumentos:
+Las comunicaciones punto a punto (por ejemplo `MPI_Send` y `MPI_Recv`) generalmente tienen la siguiente lista de argumentos:
 
 + `**buffer**`  address space del programa que referencia los datos a ser enviados ó recibidos. En muchos casos es simplemente el nombre de la variable que es enviada/recibida.
 + `**count** `  Indica el numero de elementos que son eviados.
@@ -151,6 +156,7 @@ Las comunicaciones punto a punto generalmente tienen la siguiente lista de argum
 + `**request**` Para emision/recepción no bloquada, ya que estas operaciones pueden volver antes de que el pedido de sistema de buffer space sea obtenido. Puede ser utilizado en las rutinas de `WAIT` para determinar si la operación fue completada. En fortran es un entero.
 
 Ejemplos:
+
 |--------------------------------------------------------------------------------------------|
 | *emisión bloqueada*      | `MPI_SEND ( *buffer, count, type, dest, tag, comm* )          ` |
 | *emisión no bloquada*    | `MPI ISEND( *buffer, count, type, dest, tag. comm, request* )  `|
@@ -186,6 +192,7 @@ Ejemplos:
 ---
 
 ## Comunicación colectiva
+
 La comunicación colectiva involucra a todos los procesos en el alcance del comunicador. 
   + Todos los procesos por default son miembors del comunicador `MPI_COMM_WORLD`.
   + Se pueden definir comunicadores adicioneles.

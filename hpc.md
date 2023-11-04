@@ -126,7 +126,7 @@ Como cada procesador tiene su propia memoria local, opera de forma independiente
 En teoría estas arquitecturas permiten que los procesadores accedan a cualquier porción de la memoria libremente. Aunque los procesadores operen independientemente todos comparten los mismos recursos de memoria.
 
 Dentro de las arquitecturas de memoria compartida existen dos tipos básicos:
-  
+
   + **Uniform Memory Access (UMA)** Los procesadores son idénticos, y todos tienen igual acceso y en el mismo tiempo a la memoria. 
 
   + **Non-Uniform Memory Access (NUMA)** Comumente formados por varios UMA interconectados. El acceso a memoria no es equitativo entre procesadores, aunque todos tengan acceso. 
@@ -153,7 +153,7 @@ Existen varios modelos de programación paralela en uso:
     + Un proceso principal (usualmente conocido como *master thread*) tiene multiples procesos secundarios (*slave threads*)
     + El *master thread* es la rama principal del proceso completo (por momentos se puede ejecutar serial).
     + Ejemplos: **openMP**, **POSIX**
- 
+
  + *Messege Passing* (de memoria distribuida)
     + Un conjunto de tasks usan su porpia memoria local y varios de ellos pueden ó no residir en la misma maquina. 
     + El intercambio de datos entre tasks se realiza vía envio y recepción de mensajes.
@@ -166,13 +166,13 @@ Existen varios modelos de programación paralela en uso:
     + La mayoria del trabajo paralelo se focaliza en realizar operaciones en un conjunto de datos.
     + Los datos generalmente se organizan en una estructura común como arrays o cubos.
     + Ejemplos: **Coarray** (Fortran)
- 
+
 
 A continuación se muestra una estructura típica de cluster y las herramientas que nos permiten interactuar con las distintas partes del mismo
 ![](hpc/imgs/cluster_network.png)
 
 
- 
+
 ## Diseño de programas paralelos
 
 Sin duda, el primer paso a desarrollar un programa paralelo es entender en primer lugar el problema que se quiere resolver en paralelo. Y analizar antes si el problema es realmente paralelizable.
@@ -186,7 +186,7 @@ y comparar con otros algoritmos posibles (si existen).
 
 ### Paralelismo automatico
 Muchos compiladores cuando analizan el código identifican oportunidades para paralelizar, particularmente en loops. En tal caso uno podría analizar el código e identificar inhibidores e intentar eliminarlos de forma tal que el compilador pueda identificarlo y paralelizar.
- 
+
 De todas formas lo más común es que la paralelización se realice manualmente en base a directivas realizadas por el programador.
 
 ### Partición
@@ -196,12 +196,11 @@ El primer paso en todo programa paralelo es descomponer el problema en pedazos d
 Hay dos formas básicas de particionar:
   + *Descomposición del dominio*: Esta asociado a descomponer los datos asociados al problema, y hacer que cada task trabaje en una porción de los datos. Por ejemplo se puede descomponer los datos en *bloques* ó *ciclicamente*.
 
-    
   + *Descomposición funcional*: Este se focaliza en el rol que cumple cada pedazo de código en la resolución de problema global. Por ejemplo en el modelado de la atmósfera se descomponen las rutinas en: dinámica, física (turbulencia, convección, radiación, nubes, etc.), química, océano, etc.
- 
+
 ### Comunicación
 La comunicación sólo es necesaria cuando los tasks comparten datos. Si el problema a tratar se puede descomponer en muchos pedazos autónomos, entonces no es necesario hacer eso de ella.
-Algunos facotres a considerar:
+Algunos factores a considerar:
 
 + Evitar *sobre-comunicación* (*overhead*)
 + *Latencia vs Ancho de banda*

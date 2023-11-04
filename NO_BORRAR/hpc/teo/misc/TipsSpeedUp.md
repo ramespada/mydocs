@@ -19,6 +19,7 @@ donde n puede ser:
 	- **Simplificacion de constantes **, evitar variables del tipo ``y=4+8`` (reemplazar por ``y=12``).
 	- **Evitar condicionales** , en lugar de expresiones del tipo ``IF (i .eq.j .or. i .eq. k)`` usar directamente ``i=j``.
 	- **Usar registros**, para variables muy usadas, guardarlos en registros.
+
 ### A nivel de bloques:
 	- Eliminar bloques que no se ejecutan.
 	- Ordenar instrucciones para mejorar el acceso de memoria.
